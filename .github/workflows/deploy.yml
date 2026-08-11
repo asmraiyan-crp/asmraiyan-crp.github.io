@@ -44,7 +44,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./my-3d-portfolio/out
+          path: ./out
 
   deploy:
     environment:

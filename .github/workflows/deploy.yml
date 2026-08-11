@@ -17,24 +17,34 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Change this to match the EXACT folder name in your GitHub repo
+        working-directory: ./my-3d-portfolio 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          # Updated node-version to 22 based on the camera-controls warning
+          node-version: "22" 
           cache: 'npm'
+          cache-dependency-path: './my-3d-portfolio/package-lock.json'
+      
       - name: Install dependencies
         run: npm ci
+      
       - name: Build with Next.js
         run: npx next build
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./my-3d-portfolio/out
 
   deploy:
     environment:
